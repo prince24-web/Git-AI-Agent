@@ -1,15 +1,27 @@
 # -*- coding: utf-8 -*-
+import os
 import getpass
 import argparse
 from dotenv import load_dotenv
 from langchain.agents import initialize_agent, AgentType
 from langchain_google_genai import ChatGoogleGenerativeAI
 
-# import all your Git tools
+# Import all your Git tools
 from functions import (
-    git_add, git_clone, git_commit, git_create_branch, git_first_push,
-    git_init, git_list_branches, git_log, git_merge, git_pull,
-    git_push, git_reset, git_status, git_switch_branch
+    git_add,
+    git_clone,
+    git_commit,
+    git_create_branch,
+    git_first_push,
+    git_init,
+    git_list_branches,
+    git_log,
+    git_merge,
+    git_pull,
+    git_push,
+    git_reset,
+    git_status,
+    git_switch_branch,
 )
 
 # ----------------------------
@@ -17,7 +29,6 @@ from functions import (
 # ----------------------------
 load_dotenv()
 
-import os
 if not os.getenv("GEMINI_API_KEY"):
     os.environ["GEMINI_API_KEY"] = getpass.getpass("Enter your Gemini API key: ")
 
@@ -60,11 +71,16 @@ agent = initialize_agent(
 )
 
 # ----------------------------
-# 5. Test Agent
+# 5. Run Agent
 # ----------------------------
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('prompt', nargs='*', help='Prompt to send to Gemini')
     args = parser.parse_args()
-    prompt = " ".join(args.prompt) if args.prompt else input("Enter your prompt: ")
+
+    if args.prompt:
+        prompt = " ".join(args.prompt)
+    else:
+        prompt = input("Enter your prompt: ")
+
     print(agent.run(prompt))
