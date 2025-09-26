@@ -61,4 +61,4 @@ agent = initialize_agent(
 # ----------------------------
 # 5. Test Agent
 # ----------------------------
-agent.run("what is my git status")
+agent.run("commit all my staged filed with the message added requirment")
