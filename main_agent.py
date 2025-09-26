@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import getpass
+import argparse
 from dotenv import load_dotenv
 from langchain.agents import initialize_agent, AgentType
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -61,4 +62,9 @@ agent = initialize_agent(
 # ----------------------------
 # 5. Test Agent
 # ----------------------------
-agent.run("commit all my staged filed with the message added requirment")
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('prompt', nargs='*', help='Prompt to send to Gemini')
+    args = parser.parse_args()
+    prompt = " ".join(args.prompt) if args.prompt else input("Enter your prompt: ")
+    print(agent.run(prompt))
